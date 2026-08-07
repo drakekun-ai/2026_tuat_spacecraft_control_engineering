@@ -45,13 +45,24 @@ def func_satellite(x, t, J1, J2, J3):
 if (__name__ == '__main__'):
     t_list = np.linspace(0.0, 100.0, 30000)
 
-    # 慣性モーメントの定義 (いろいろ変えてみよう)
+    # 慣性モーメントの定義 
     J1 = 30.0
-    J2 = 40.0
-    J3 = 50.0 
+    J2 = 50.0
+    J3 = 40.0 
     # J1 = 30.0
     # J2 = 50.0
     # J3 = 40.0 
+
+
+    # 第3軸(スピン軸)の慣性モーメントが最小/最大/中間のどれかを判定
+    J_all = [J1, J2, J3]
+    if J3 == max(J_all):
+        axis_label = "Major Axis Spin (Stable)"
+    elif J3 == min(J_all):
+        axis_label = "Minor Axis Spin (Stable)"
+    else:
+        axis_label = "Intermediate Axis Spin (Unstable)"
+
     
     # 状態変数 x の初期値 [ω1, ω2, ω3, φ1, φ2, φ3] の順で格納している
     # ω1 には微小擾乱を与えている
@@ -110,12 +121,20 @@ if (__name__ == '__main__'):
     ax6.set_ylabel(r"$\omega_2$")
     ax6.set_zlabel(r"$\omega_3$")  
     
-    
-    fig.tight_layout()  
+    fig.suptitle(f"{axis_label}  (J1={J1}, J2={J2}, J3={J3})", fontsize=13)
+    fig.tight_layout(rect=[0, 0, 1, 0.95])   # leave room so suptitle doesn't overlap subplots
+    fig.tight_layout() 
+    fig.savefig("min_axis.png", dpi=200) 
     plt.show()
     #plt.savefig("spin_attitude.png")
     
-    
+    fname_map = {
+        "Major Axis Spin (Stable)": "major_axis.png",
+        "Minor Axis Spin (Stable)": "minor_axis.png",
+        "Intermediate Axis Spin (Unstable)": "intermediate_axis.png",
+    }
+    fig.savefig(fname_map[axis_label], dpi=200)
+
     # 結果の入った構造体の保存（別のファイルで使用する時用)
     # filename = 'ode_result.pkl'
     # # Save the `OdeResult` object to a file using pickle
