@@ -23,7 +23,7 @@ d = 0.02   # ダンパの減衰係数 [N s/m]
 k = 0.1    # ばね定数 [N/m]
 
 # 内部質点の基準位置 r と、質点が移動する方向 n
-r = np.array([0.0, 0.3, 0.0])
+r = np.array([0.0, 1.0, 0.0])
 n = np.array([0.0, 0.0, 1.0])
 
 # r の外積行列 r~
@@ -206,7 +206,7 @@ def main():
     # 計算結果のプロット
     # -------------------------------------------------------------------------
     figure = plt.figure(figsize=(13.0, 10.0))
-    figure.suptitle("Case 4: Damper Near CG, r=0.3 vs r=1.0 (J1=2, J2=2, J3=3)", fontsize=16)
+    figure.suptitle("Case 4: Original Damper, r=1.0  (J1=2, J2=2, J3=3)", fontsize=16)
 
     angular_velocity_plot = figure.add_subplot(2, 2, 1)
     angular_velocity_plot.plot(times, states[:, 0], label=r"$\omega_1$")
@@ -256,7 +256,7 @@ def main():
     phase_plot.legend()
 
     figure.tight_layout(rect=[0.0, 0.0, 1.0, 0.96])
-    figure.savefig("case4_damper_near_cg.png", dpi=150) 
+    figure.savefig("case4_damper_original.png", dpi=150) 
     plt.show()
 
 
